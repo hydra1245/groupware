@@ -27,4 +27,7 @@ public class NoticeService {
     public long noticeDelete(long id) {
         return repository.noticeDelete(id);
     }
+    public long noticeUpdate(long id, String title, String content) {
+        return repository.noticeUpdate(id, title, content);
+    }
 }

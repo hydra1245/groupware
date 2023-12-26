@@ -10,4 +10,5 @@ public interface NoticeRepositoryCustom {
     long viewCountUpdate(long id);
     NoticeDetailDto getDetail(long id);
     long noticeDelete(long id);
+    long noticeUpdate(long id, String title, String content);
 }

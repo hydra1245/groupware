@@ -78,11 +78,35 @@ public class NoticeController {
             isAuthor = "Y";
         }
 
-        if(isAuthor == "N") {
+        if(isAuthor.equals("N")) {
             return "N";
         }
 
         long count = service.noticeDelete(id);
+
+        if(count >= 1) {
+            return "Y";
+        }
+
+        return "N";
+    }
+
+    @PostMapping("/notice/update/{id}")
+    @ResponseBody
+    public String noticeUpdate(@PathVariable long id, @RequestBody NoticeRegistDto updateData,
+                               @AuthenticationPrincipal MemberPrincipalDetails user) {
+        NoticeDetailDto dto = service.getDetail(id);
+
+        String isAuthor = "N";
+        if(dto.getMemberId().equals(user.getMember().getMemberId())) {
+            isAuthor = "Y";
+        }
+
+        if(isAuthor.equals("N")) {
+            return "N";
+        }
+
+        long count = service.noticeUpdate(id, updateData.getTitle(), updateData.getContent());
 
         if(count >= 1) {
             return "Y";

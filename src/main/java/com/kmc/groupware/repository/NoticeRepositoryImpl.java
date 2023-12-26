@@ -10,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.kmc.groupware.domain.QMember.member;
@@ -35,12 +36,11 @@ public class NoticeRepositoryImpl implements NoticeRepositoryCustom{
     @Override
     @Transactional
     public long viewCountUpdate(long id) {
-        long count = queryFactory
+        return queryFactory
                 .update(notice)
                 .set(notice.viewCount, notice.viewCount.add(1))
                 .where(notice.id.eq(id))
                 .execute();
-        return count;
     }
 
     @Override
@@ -60,12 +60,24 @@ public class NoticeRepositoryImpl implements NoticeRepositoryCustom{
     @Override
     @Transactional
     public long noticeDelete(long id) {
-        long count = queryFactory
+        return queryFactory
                 .update(notice)
                 .set(notice.onOff,"N")
                 .where(notice.id.eq(id))
                 .execute();
 
-        return count;
+    }
+
+    @Override
+    @Transactional
+    public long noticeUpdate(long id, String title, String content) {
+        return queryFactory
+                .update(notice)
+                .set(notice.title, title)
+                .set(notice.content, content)
+                .set(notice.updateDate, LocalDateTime.now())
+                .where(notice.id.eq(id).and(notice.onOff.eq("Y")))
+                .execute();
+
     }
 }

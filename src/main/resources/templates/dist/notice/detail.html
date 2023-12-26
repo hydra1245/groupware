@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>그룹웨어 - 공지사항 등록</title>
+    <title>그룹웨어 - 공지사항 상세 조회</title>
     <link href="/dist/css/styles.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -46,8 +46,10 @@
                 <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                     <!--<a class="small" href="password.html">Forgot Password?</a>-->
                     <th:block th:if="${isAuthor == 'Y'}">
-                        <a class="btn btn-primary" href="javascript:noticeRegist();">수정</a>
-                        <a class="btn btn-primary" href="javascript:noticeDelete();">삭제</a>
+                        <a class="btn btn-primary" href="javascript:noticeUpdate();" id="updateBtn" style="display:none;">수정 완료</a>
+                        <a class="btn btn-primary" id="updateCancel" style="display:none;" href="javascript:goDetail();">수정 취소</a>
+                        <a class="btn btn-primary" href="javascript:goUpdate();" id="goUpdate">수정</a>
+                        <a class="btn btn-primary" href="javascript:noticeDelete();" id="deleteBtn">삭제</a>
                     </th:block>
                     <a class="btn btn-primary" href="/notice/list">목록</a>
                 </div>
@@ -59,6 +61,8 @@
 <div th:replace="dist/fragment/footerScript :: footerScript"/>
 <script type="text/javascript">
     let noticeId = "[[${notice.id}]]";
+    let orgTitle = "[[${notice.title}]]";
+    let orgContent = "[[${notice.content}]]";
 </script>
 <script type="text/javascript" src="/js/notice/detail.js"></script>
 </body>
