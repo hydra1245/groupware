@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>그룹웨어 - 자유게시판</title>
+    <link href="/dist/css/styles.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+<div th:replace="dist/fragment/header :: header"/>
+<div id="layoutSidenav">
+    <div th:replace="dist/fragment/leftmenu :: leftmenu" />
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">자유게시판</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active">그룹웨어에 올라온 게시글을 확인하세요.</li>
+                </ol>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table mr-1"></i>
+                    자유게시판 목록
+                </div>
+                <div class="card-body">
+                    <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                        <!--<a class="small" href="password.html">Forgot Password?</a>-->
+                        <a class="btn btn-primary" href="/free-board/regist">게시글 등록</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>글 번호</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>조회수</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>글 번호</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>조회수</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <tr th:each="freeBoard : ${freeBoardList}">
+                                <td th:text="${freeBoard.id}"></td>
+                                <td><a th:text="${freeBoard.title}" th:href="@{/free-board/detail/{id}(id=${freeBoard.id})}"></a></td>
+                                <td th:text="${freeBoard.memberName}"></td>
+                                <td th:text="${freeBoard.viewCount}"></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div th:replace="dist/fragment/footer :: footer"/>
+    </div>
+</div>
+<div th:replace="dist/fragment/footerScript :: footerScript"/>
+</body>
+</html>

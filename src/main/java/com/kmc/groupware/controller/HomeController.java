@@ -11,6 +11,8 @@ import com.kmc.groupware.service.EmployeeRankService;
 import com.kmc.groupware.service.MemberService;
 import com.kmc.groupware.service.PlaceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,8 @@ public class HomeController {
     private final EmployeeRankService rankService;
     private final PlaceService placeService;
     private final MemberService memberService;
+
+    private final RedisTemplate<String, String> redisTemplate;
 
     @GetMapping("/home/test")
     public String test() {
@@ -65,5 +69,24 @@ public class HomeController {
             return "Y";
         }
         return "N";
+    }
+
+    @PostMapping("/home/redis/{key}/{value}")
+    @ResponseBody
+    public String redisKeyValueSet(@PathVariable String key, @PathVariable String value) {
+        ValueOperations<String, String> valueOperations =
+                redisTemplate.opsForValue();
+
+        valueOperations.set(key,value);
+
+        return "Y";
+    }
+
+    @GetMapping("/home/redis/{key}")
+    @ResponseBody
+    public String redisGetValue(@PathVariable String key) {
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+
+        return valueOperations.get(key);
     }
 }

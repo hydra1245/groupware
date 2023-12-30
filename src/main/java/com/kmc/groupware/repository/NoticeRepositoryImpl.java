@@ -31,6 +31,7 @@ public class NoticeRepositoryImpl implements NoticeRepositoryCustom{
                 .join(member)
                 .on(notice.memberId.eq(member.memberId))
                 .where(notice.onOff.eq("Y"))
+                .orderBy(notice.id.desc())
                 .fetch();
     }
     @Override

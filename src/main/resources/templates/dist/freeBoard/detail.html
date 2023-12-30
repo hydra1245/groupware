@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>그룹웨어 - 자유게시판 상세 조회</title>
+    <link href="/dist/css/styles.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+<div th:replace="dist/fragment/header :: header"/>
+<div id="layoutSidenav">
+    <div th:replace="dist/fragment/leftmenu :: leftmenu" />
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">자유게시판 상세 조회</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active">공지사항 내용을 확인하세요.</li>
+                </ol>
+            </div>
+                <div class="form-group">
+                    <label class="small mb-2" for="inputTitle">제목</label>
+                    <input class="form-control py-4" id="inputTitle" type="text" name="title"
+                           style="width:50%;" readonly="readonly" th:value="${freeBoard.title}"/>
+                </div>
+                <div class="form-group">
+                    <label class="small mb-2" for="inputMember">작성자</label>
+                    <input class="form-control py-4" id="inputMember" type="text" name="memberName"
+                       style="width:50%;" readonly="readonly" th:value="${freeBoard.memberName}"/>
+                </div>
+            <div class="form-group">
+                <label class="small mb-2" for="viewCount">조회수</label>
+                <input class="form-control py-4" id="viewCount" type="text" name="viewCount"
+                       style="width:50%;" readonly="readonly" th:value="${freeBoard.viewCount}"/>
+            </div>
+                <div class="form-group">
+                    <label class="small mb-2" for="inputTitle">내용</label>
+                    <textarea rows="20" cols="30" id="inputContent" name="content" class="form-control" readonly="readonly" th:text="${freeBoard.content}"></textarea>
+                </div>
+
+                <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
+                    <!--<a class="small" href="password.html">Forgot Password?</a>-->
+                    <th:block th:if="${isAuthor == 'Y'}">
+                        <a class="btn btn-primary" href="javascript:noticeUpdate();" id="updateBtn" style="display:none;">수정 완료</a>
+                        <a class="btn btn-primary" id="updateCancel" style="display:none;" href="javascript:goDetail();">수정 취소</a>
+                        <a class="btn btn-primary" href="javascript:goUpdate();" id="goUpdate">수정</a>
+                        <a class="btn btn-primary" href="javascript:noticeDelete();" id="deleteBtn">삭제</a>
+                    </th:block>
+                    <a class="btn btn-primary" href="/free-board/list">목록</a>
+                </div>
+            </form>
+        </main>
+        <div th:replace="dist/fragment/footer :: footer"/>
+    </div>
+</div>
+<div th:replace="dist/fragment/footerScript :: footerScript"/>
+<script type="text/javascript">
+    let freeBoardId = "[[${freeBoard.id}]]";
+    let orgTitle = "[[${freeBoard.title}]]";
+    let orgContent = "[[${freeBoard.content}]]";
+</script>
+<script type="text/javascript" src="/js/freeBoard/detail.js"></script>
+</body>
+</html>

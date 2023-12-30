@@ -71,14 +71,9 @@ public class NoticeController {
     @GetMapping("/notice/delete/{id}")
     @ResponseBody
     public String noticeDelete(@PathVariable long id, @AuthenticationPrincipal MemberPrincipalDetails user) {
-        NoticeDetailDto dto = service.getDetail(id);
 
-        String isAuthor = "N";
-        if(dto.getMemberId().equals(user.getMember().getMemberId())) {
-            isAuthor = "Y";
-        }
 
-        if(isAuthor.equals("N")) {
+        if(isAuthor(id, user).equals("N")) {
             return "N";
         }
 
@@ -95,14 +90,8 @@ public class NoticeController {
     @ResponseBody
     public String noticeUpdate(@PathVariable long id, @RequestBody NoticeRegistDto updateData,
                                @AuthenticationPrincipal MemberPrincipalDetails user) {
-        NoticeDetailDto dto = service.getDetail(id);
 
-        String isAuthor = "N";
-        if(dto.getMemberId().equals(user.getMember().getMemberId())) {
-            isAuthor = "Y";
-        }
-
-        if(isAuthor.equals("N")) {
+        if(isAuthor(id, user).equals("N")) {
             return "N";
         }
 
@@ -113,6 +102,16 @@ public class NoticeController {
         }
 
         return "N";
+    }
+
+    private String isAuthor(long id, MemberPrincipalDetails user) {
+        NoticeDetailDto dto = service.getDetail(id);
+
+        String isAuthor = "N";
+        if(dto.getMemberId().equals(user.getMember().getMemberId())) {
+            isAuthor = "Y";
+        }
+        return isAuthor;
     }
 
 

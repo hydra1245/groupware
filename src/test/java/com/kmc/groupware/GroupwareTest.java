@@ -6,6 +6,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -18,6 +20,9 @@ public class GroupwareTest {
     EntityManager em;
 
     JPAQueryFactory queryFactory;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     @Test
     public void DeptTest() {
@@ -49,5 +54,17 @@ public class GroupwareTest {
                 .on(qPlace.placeName.eq(qMeetingReserve.placeName))
                 .fetch();
 
+    }
+
+    @Test
+    public void redisTest() {
+        ValueOperations<String, String> valueOperations =
+                redisTemplate.opsForValue();
+        String key = "first";
+
+        valueOperations.set(key,"HelloWorld");
+
+        String value = valueOperations.get(key);
+        Assertions.assertThat(value).isEqualTo("HelloWorld");
     }
 }
