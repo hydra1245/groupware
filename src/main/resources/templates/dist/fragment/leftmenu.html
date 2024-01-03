@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div id="layoutSidenav_nav" th:fragment="leftmenu">
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
@@ -68,8 +69,8 @@
             </div>
         </div>
         <div class="sb-sidenav-footer">
-            <div class="small">Logged in as:</div>
-            Start Bootstrap
+            <div class="small" sec:authentication="name"></div>
+            님이 로그인 했습니다.
         </div>
     </nav>
 </div>
