@@ -1,7 +1,9 @@
 package com.kmc.groupware.repository;
 
 import com.kmc.groupware.domain.QPlace;
+import com.kmc.groupware.dto.MeetingPlaceDto;
 import com.kmc.groupware.dto.MemberRegistPlaceDto;
+import com.kmc.groupware.dto.QMeetingPlaceDto;
 import com.kmc.groupware.dto.QMemberRegistPlaceDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -26,4 +28,15 @@ public class PlaceRepositoryImpl implements PlaceRepositoryCustom {
                 .where(place.onOff.eq("Y").and(place.isConference.eq("N")))
                 .fetch();
     }
+
+    @Override
+    public List<MeetingPlaceDto> findAllMeetingPlace() {
+        return queryFactory
+                .select(new QMeetingPlaceDto(place.placeName))
+                .from(place)
+                .where(place.onOff.eq("Y").and(place.isConference.eq("N")))
+                .fetch();
+    }
+
+
 }

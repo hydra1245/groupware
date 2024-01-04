@@ -1,5 +1,6 @@
 package com.kmc.groupware.service;
 
+import com.kmc.groupware.dto.MeetingPlaceDto;
 import com.kmc.groupware.dto.MemberRegistPlaceDto;
 import com.kmc.groupware.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,5 +15,8 @@ public class PlaceService {
 
     public List<MemberRegistPlaceDto> findAllPlaceList() {
         return repository.findAllPlaceList();
+    }
+    public List<MeetingPlaceDto> findAllMeetingPlace() {
+        return repository.findAllMeetingPlace();
     }
 }
