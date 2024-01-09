@@ -32,9 +32,9 @@ public class PlaceRepositoryImpl implements PlaceRepositoryCustom {
     @Override
     public List<MeetingPlaceDto> findAllMeetingPlace() {
         return queryFactory
-                .select(new QMeetingPlaceDto(place.placeName))
+                .select(new QMeetingPlaceDto(place.id, place.placeName))
                 .from(place)
-                .where(place.onOff.eq("Y").and(place.isConference.eq("N")))
+                .where(place.onOff.eq("Y").and(place.isConference.eq("Y")))
                 .fetch();
     }
 

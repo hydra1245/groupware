@@ -7,10 +7,11 @@ import lombok.Data;
 public class MeetingPlaceDto {
 
     @QueryProjection
-    public MeetingPlaceDto(String placeName) {
+    public MeetingPlaceDto(long id, String placeName) {
+        this.id = id;
         this.placeName = placeName;
     }
-
+    public long id;
     public String placeName;
 
 
