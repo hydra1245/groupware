@@ -51,9 +51,10 @@ public class MeetingReserveRepositoryImpl implements MeetingReserveRepositoryCus
         return queryFactory.select(new QMeetingListDto(meetingReserve.id, meetingReserve.placeName,
                 meetingReserve.meetingTitle, meetingReserve.memberId,
                 meetingReserve.startDate, meetingReserve.endDate))
-                .from(meetingReserveMember)
+                .from(meetingReserve)
                 .where(meetingReserve.placeName.eq(placeName)
                         .and(meetingReserve.startDate.between(startDateTime, endDateTime)))
+                .orderBy(meetingReserve.startDate.desc())
                 .fetch();
     }
 }

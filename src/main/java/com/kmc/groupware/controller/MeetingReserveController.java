@@ -37,8 +37,8 @@ public class MeetingReserveController {
 
     @GetMapping("/meeting-reserve/search")
     @ResponseBody
-    public List<MeetingListDto> getMeetingSearchList(@PathVariable String startDate,
-                                                     @PathVariable String placeName)
+    public List<MeetingListDto> getMeetingSearchList(String startDate,
+                                                     String placeName)
     {
         List<MeetingListDto> result = meetingReserveService.getMeetingList(startDate, placeName);
         return result;

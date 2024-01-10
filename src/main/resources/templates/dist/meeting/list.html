@@ -45,6 +45,11 @@
                                 <input class="form-control py-4" id="dateSelect" type="text" placeholder="" name="dateSelect" />
                             </div>
                         </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <a class="btn btn-primary" href="javascript:search();">검색</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                         <!--<a class="small" href="password.html">Forgot Password?</a>-->
@@ -70,7 +75,7 @@
                                 <th>예약자</th>
                             </tr>
                             </tfoot>
-                            <tbody>
+                            <tbody id="meetingList">
                             <!--<tr th:each="notice : ${noticeList}">
                                 <td th:text="${notice.id}"></td>
                                 <td><a th:text="${notice.title}" th:href="@{/notice/detail/{id}(id=${notice.id})}"></a></td>
@@ -94,7 +99,49 @@
         $("#dateSelect").datepicker({
             dateFormat: "yy-mm-dd"
         });
+
+
     });
+    function search() {
+        if($('#dateSelect').val() == "") {
+            alert("날짜를 선택하세요");
+            return;
+        }
+        if($('#placeSelect').val() == "") {
+            alert("회의실을 선택하세요");
+            return;
+        }
+
+        $.ajax({
+            type : "get",
+            url : "/meeting-reserve/search?startDate=" + $('#dateSelect').val() + "&placeName=" + $('#placeSelect').val(),
+            contentType : "application/json",
+            success : function(data) {
+                $('#meetingList').empty();
+                if(data.length == 0) {
+                    alert("조회된 데이터가 없습니다.");
+                }
+                else {
+                    $('#meetingList').empty();
+                    for(var i = 0 ; i < data.length; i++) {
+                        $('#meetingList').append("<tr>");
+                        $('#meetingList').append("<td>" + data[i].placeName + "</td>");
+                        $('#meetingList').append("<td>" + data[i].meetingTitle + "</td>");
+                        $('#meetingList').append("<td>" + data[i].startDate + "</td>");
+                        $('#meetingList').append("<td>" + data[i].endDate + "</td>");
+                        $('#meetingList').append("<td>" + data[i].memberId + "</td>");
+                        $('#meetingList').append("<tr>");
+
+                    }
+                }
+
+            },
+            error : function(err) {
+                alert("조회에 실패하였습니다.");
+            }
+
+        });
+    }
 </script>
 </body>
 </html>
